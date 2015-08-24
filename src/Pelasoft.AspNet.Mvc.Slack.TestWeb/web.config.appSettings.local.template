@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<appSettings>
+	<!-- Use this file to set the slack app settings for local dev only.
+		File changes will be ignored by Git. -->
+	<add key="slack:webhookurl" value="{my slack webhooks URL}"/>
+	<add key="slack:channel" value="{#channel or @username}"/>
+	<add key="slack:username" value="{posting user name}"/>
+</appSettings>
