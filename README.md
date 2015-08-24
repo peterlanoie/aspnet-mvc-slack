@@ -24,7 +24,7 @@ A couple of import notes:
 * By default, this filter doesn't care if the exception has already been handled. If you want to ignore previously handled exceptions, set ```IgnoreHandled = true```.
 
 ### Example: Global app reporting
-Add something like this to your global application configuration (global.asax.xx|App_Start\FilterConfig.xx|etc.)
+Add something like this to your global application configuration (global.asax.xx | App_Start\FilterConfig.xx | etc.)
 ```csharp
 var slackReporter =
 	new WebHookErrorReportFilter("{my slack team webhook url}")
@@ -34,4 +34,21 @@ var slackReporter =
 		IgnoreHandled = true // or false; whether or not to ignore already handled exceptions
 	};
 filters.Add(slackReporter);
+```
+## WebHookErrorReportAttribute
+An MVC action filter that wraps the WebHookErrorReportFilter. It performs the same function but can be used to decorate a controller or controller method.
+
+### Minimalist Example:
+```csharp
+	[WebHookErrorReport("{my slack team webhook URL}")]
+```
+
+### Complete Example:
+```csharp
+	[WebHookErrorReport(
+		"{my slack team webhook URL}",
+		ChannelName = "{#channel|@username}",
+		UserName = "{user name}",
+		IgnoreHandled = true
+	)]
 ```
