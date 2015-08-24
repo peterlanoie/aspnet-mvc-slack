@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IWebHookErrorReporter.cs" />
     <Compile Include="WebHookErrorReportFilter.cs" />
     <Compile Include="WebHookErrorReportAttribute.cs">
       <SubType>Code</SubType>

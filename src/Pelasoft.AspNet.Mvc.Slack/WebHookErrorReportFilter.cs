@@ -10,7 +10,7 @@ namespace Pelasoft.AspNet.Mvc.Slack
 	/// <summary>
 	/// Defines an action filter that logs thrown exceptions to a Slack channel.
 	/// </summary>
-	public class WebHookErrorReportFilter : IExceptionFilter
+	public class WebHookErrorReportFilter : IExceptionFilter, IWebHookErrorReporter
 	{
 
 		/// <summary>
@@ -31,6 +31,12 @@ namespace Pelasoft.AspNet.Mvc.Slack
 		public string UserName { get; set; }
 
 		/// <summary>
+		/// Whether or not to ignore already handled exceptions.
+		/// If this is set true, the application/controller/method filter order will be significant.
+		/// </summary>
+		public bool IgnoreHandled { get; set; }
+
+		/// <summary>
 		/// The types of the exceptions to ignore. Use this to cut down on unecessary channel chatter.
 		/// This list will be ignored if <see cref="ExceptionType"/> is specified.
 		/// </summary>
@@ -47,6 +53,9 @@ namespace Pelasoft.AspNet.Mvc.Slack
 
 		public void OnException(ExceptionContext filterContext)
 		{
+			// auto eject if ignoring handled exceptions
+			if(IgnoreHandled && filterContext.ExceptionHandled) return;
+
 			var client = new WebHooks.SlackClient(WebhookUrl);
 			var message = new WebHooks.SlackMessage();
 			if(!string.IsNullOrEmpty(ChannelName))
@@ -64,6 +73,7 @@ namespace Pelasoft.AspNet.Mvc.Slack
 
 			client.Post(message);
 		}
+
 
 	}
 }

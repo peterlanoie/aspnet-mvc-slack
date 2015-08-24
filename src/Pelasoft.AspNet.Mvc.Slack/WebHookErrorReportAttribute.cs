@@ -11,7 +11,7 @@ namespace Pelasoft.AspNet.Mvc.Slack
 	/// Defines an action filter that logs thrown exceptions to a Slack channel.
 	/// </summary>
 	[AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = true)]
-	public class WebHookErrorReportAttribute : FilterAttribute, IExceptionFilter
+	public class WebHookErrorReportAttribute : FilterAttribute, IWebHookErrorReporter, IExceptionFilter
 	{
 		private readonly WebHookErrorReportFilter _innerFilter;
 
@@ -42,6 +42,12 @@ namespace Pelasoft.AspNet.Mvc.Slack
 		{
 			get { return _innerFilter.UserName; }
 			set { _innerFilter.UserName = value; }
+		}
+
+		public bool IgnoreHandled
+		{
+			get { return _innerFilter.IgnoreHandled; }
+			set { _innerFilter.IgnoreHandled = value; }
 		}
 
 		/// <summary>
