@@ -35,7 +35,7 @@ namespace Pelasoft.AspNet.Mvc.Slack
 		}
 
 		/// <summary>
-		/// The username the error messages will post ask.
+		/// The username the error messages will post as.
 		/// Optional; the web hook default username will be used if not specified.
 		/// </summary>
 		public string UserName
