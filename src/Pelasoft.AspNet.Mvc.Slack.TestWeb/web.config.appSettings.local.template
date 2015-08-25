@@ -5,4 +5,10 @@
 	<add key="slack:webhookurl" value="{my slack webhooks URL}"/>
 	<add key="slack:channel" value="{#channel or @username}"/>
 	<add key="slack:username" value="{posting user name}"/>
+	<add key="slack:text" value="{custom post message text}"/>
+	<add key="slack:iconEmoji" value=":warning:"/>
+	<!-- See the Slack attachments documentation: https://api.slack.com/docs/attachments -->
+	<add key="slack:color" value="{attachment color (good|warning|danger|hex code)}"/>
+	<add key="slack:title" value="{attachment title}"/>
+	<add key="slack:link" value="{attachment title link}"/>
 </appSettings>

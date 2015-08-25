@@ -17,6 +17,10 @@ namespace Pelasoft.AspNet.Mvc.Slack.TestWeb
 					ChannelName = ConfigurationManager.AppSettings["slack:channel"],
 					UserName = ConfigurationManager.AppSettings["slack:username"],
 					IconEmoji = ConfigurationManager.AppSettings["slack:iconEmoji"],
+					AttachmentColor = ConfigurationManager.AppSettings["slack:color"],
+					AttachmentTitle = ConfigurationManager.AppSettings["slack:title"],
+					AttachmentTitleLink = ConfigurationManager.AppSettings["slack:link"],
+					Text = ConfigurationManager.AppSettings["slack:text"],
 					IgnoreHandled = true,
 					IgnoreExceptionTypes = new [] { typeof(System.ApplicationException) },
 				};

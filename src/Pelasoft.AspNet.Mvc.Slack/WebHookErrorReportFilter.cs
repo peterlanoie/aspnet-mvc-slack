@@ -49,6 +49,27 @@ namespace Pelasoft.AspNet.Mvc.Slack
 		public string IconEmoji { get; set; }
 
 		/// <summary>
+		/// An optional title for the exception attachment.
+		/// </summary>
+		public string AttachmentTitle { get; set; }
+
+		/// <summary>
+		/// An optional link for the exception attachment title. Must set AttachmentTitle to use this.
+		/// </summary>
+		public string AttachmentTitleLink { get; set; }
+
+		/// <summary>
+		/// The text of the post. A default is provided.
+		/// </summary>
+		public string Text { get; set; }
+
+		/// <summary>
+		/// The color of the attachment bar. Useful to differentiate between 
+		/// different sources when posted to the same channel.
+		/// </summary>
+		public string AttachmentColor { get; set; }
+
+		/// <summary>
 		/// Creates a new instance of the exception filter for the specified <paramref name="webHookUrl"/>.
 		/// </summary>
 		/// <param name="exceptionType">The exception type to handle.</param>
@@ -69,6 +90,7 @@ namespace Pelasoft.AspNet.Mvc.Slack
 				&& IgnoreExceptionTypes.Contains(filterContext.Exception.GetType()))
 				return;
 
+			var ex = filterContext.Exception;
 			var client = new WebHooks.SlackClient(WebhookUrl);
 			var message = new WebHooks.SlackMessage();
 			if(!string.IsNullOrEmpty(ChannelName))
@@ -82,12 +104,42 @@ namespace Pelasoft.AspNet.Mvc.Slack
 
 			message.IconEmoji = IconEmoji ?? WebHooks.Emoji.HeavyExclamationMark;
 
-			var ex = filterContext.Exception;
-			message.Text = string.Format("A web application exception has occurred:\n   type: {0}\n   message: {1}\n   stack trace: {2}", ex.GetType(), ex.Message, ex.StackTrace);
+			//			message.Text = string.Format("A web application exception has occurred:\n   type: {0}\n   message: {1}\n   stack trace: {2}", ex.GetType(), ex.Message, ex.StackTrace);
+			message.Text = Text ?? "An exception has occurred in an MVC application.";
+
+			var attachment = new WebHooks.SlackAttachment();
+			// simple message for unformatted and notification views
+			attachment.Fallback = string.Format("Web app exception: {0}", ex.Message);
+			attachment.Color = AttachmentColor ?? "danger";
+
+			if(!string.IsNullOrEmpty(AttachmentTitle))
+			{
+				attachment.Title = AttachmentTitle;
+			}
+			if(!string.IsNullOrEmpty(AttachmentTitleLink))
+			{
+				attachment.TitleLink = AttachmentTitleLink;
+			}
+			attachment.MrkdwnIn = new List<string> { "text" };
+			var textFormat = @"*URL*: %%url%%
+*Type*: %%ex:type%%
+*Message*: %%ex:message%%
+*Target Site*: %%ex:site%%
+*Stack Trace*:
+%%ex:stackTrace%%";
+
+			attachment.Text = textFormat
+				.Replace("%%url%%", filterContext.HttpContext.Request.Url.ToString())
+				.Replace("%%ex:type%%", ex.GetType().ToString())
+				.Replace("%%ex:message%%", ex.Message)
+				.Replace("%%ex:site%%", ex.TargetSite.ToString())
+				.Replace("%%ex:stackTrace%%", ex.StackTrace);
+
+			message.Attachments = new List<WebHooks.SlackAttachment>();
+			message.Attachments.Add(attachment);
 
 			client.Post(message);
 		}
-
 
 	}
 }

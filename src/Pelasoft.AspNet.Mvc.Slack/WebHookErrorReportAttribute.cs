@@ -71,6 +71,43 @@ namespace Pelasoft.AspNet.Mvc.Slack
 		}
 
 		/// <summary>
+		/// An optional title for the exception attachment.
+		/// </summary>
+		public string AttachmentTitle
+		{
+			get { return _innerFilter.AttachmentTitle; }
+			set { _innerFilter.AttachmentTitle = value; }
+		}
+
+		/// <summary>
+		/// An optional link for the exception attachment title. Must set AttachmentTitle to use this.
+		/// </summary>
+		public string AttachmentTitleLink
+		{
+			get { return _innerFilter.AttachmentTitleLink; }
+			set { _innerFilter.AttachmentTitleLink = value; }
+		}
+
+		/// <summary>
+		/// The text of the post. A default is provided.
+		/// </summary>
+		public string Text
+		{
+			get { return _innerFilter.Text; }
+			set { _innerFilter.Text = value; }
+		}
+
+		/// <summary>
+		/// The color of the attachment bar. Useful to differentiate between 
+		/// different sources when posted to the same channel.
+		/// </summary>
+		public string AttachmentColor
+		{
+			get { return _innerFilter.AttachmentColor; }
+			set { _innerFilter.AttachmentColor = value; }
+		}
+
+		/// <summary>
 		/// Creates a new instance of the exception filter for the specified <paramref name="webHookUrl"/>.
 		/// </summary>
 		/// <param name="exceptionType">The exception type to handle.</param>

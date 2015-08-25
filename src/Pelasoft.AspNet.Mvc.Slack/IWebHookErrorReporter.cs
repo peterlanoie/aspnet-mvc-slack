@@ -9,5 +9,9 @@ namespace Pelasoft.AspNet.Mvc.Slack
 		string UserName { get; set; }
 		string WebhookUrl { get; set; }
 		string IconEmoji { get; set; }
+		string AttachmentTitle { get; set; }
+		string AttachmentTitleLink { get; set; }
+		string Text { get; set; }
+		string AttachmentColor { get; set; }
 	}
 }
