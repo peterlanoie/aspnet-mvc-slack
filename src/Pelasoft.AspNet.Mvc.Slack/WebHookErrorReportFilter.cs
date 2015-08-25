@@ -40,7 +40,7 @@ namespace Pelasoft.AspNet.Mvc.Slack
 		/// The types of the exceptions to ignore. Use this to cut down on unecessary channel chatter.
 		/// This list will be ignored if <see cref="ExceptionType"/> is specified.
 		/// </summary>
-		public Type[] ExcludeExceptionTypes { get; set; }
+		public Type[] IgnoreExceptionTypes { get; set; }
 
 		/// <summary>
 		/// The Emoji icon used for the posts.
@@ -59,8 +59,15 @@ namespace Pelasoft.AspNet.Mvc.Slack
 
 		public void OnException(ExceptionContext filterContext)
 		{
-			// auto eject if ignoring handled exceptions
+			// auto eject if
+			// ...ignoring handled exceptions
 			if(IgnoreHandled && filterContext.ExceptionHandled) return;
+
+			// ...the exception type is in the ignore list
+			if(IgnoreExceptionTypes != null
+				&& IgnoreExceptionTypes.Length > 0
+				&& IgnoreExceptionTypes.Contains(filterContext.Exception.GetType()))
+				return;
 
 			var client = new WebHooks.SlackClient(WebhookUrl);
 			var message = new WebHooks.SlackMessage();

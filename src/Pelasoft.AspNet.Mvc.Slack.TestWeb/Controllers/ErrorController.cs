@@ -10,7 +10,12 @@ namespace Pelasoft.AspNet.Mvc.Slack.TestWeb.Controllers
 	{
 		public ActionResult Throw()
 		{
-			throw new Exception("Test exception: no controller or method attributed.");
+			throw new Exception("Test exception: System.Exception");
+		}
+
+		public ActionResult ThrowAppEx()
+		{
+			throw new ApplicationException("Test exception: ApplicationException");
 		}
 
 	}

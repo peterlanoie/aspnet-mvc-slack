@@ -54,10 +54,10 @@ namespace Pelasoft.AspNet.Mvc.Slack
 		/// The types of the exceptions to ignore. Use this to cut down on unecessary channel chatter.
 		/// This list will be ignored if <see cref="ExceptionType"/> is specified.
 		/// </summary>
-		public Type[] ExcludeExceptionTypes
+		public Type[] IgnoreExceptionTypes
 		{
-			get { return _innerFilter.ExcludeExceptionTypes; }
-			set { _innerFilter.ExcludeExceptionTypes = value; }
+			get { return _innerFilter.IgnoreExceptionTypes; }
+			set { _innerFilter.IgnoreExceptionTypes = value; }
 		}
 
 		/// <summary>

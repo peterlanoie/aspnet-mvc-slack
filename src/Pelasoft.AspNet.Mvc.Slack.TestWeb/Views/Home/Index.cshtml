@@ -10,7 +10,8 @@
 <body>
 	<div>
 		<ul>
-			<li>@Html.ActionLink("Throw error.", "throw", "error")</li>
+			<li>@Html.ActionLink("Throw System.Exception (should report)", "throw", "error")</li>
+			<li>@Html.ActionLink("Throw System.ApplicationException (should NOT report)", "throwAppEx", "error")</li>
 		</ul>
 	</div>
 </body>

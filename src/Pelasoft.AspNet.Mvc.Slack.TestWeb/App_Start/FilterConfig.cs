@@ -18,6 +18,7 @@ namespace Pelasoft.AspNet.Mvc.Slack.TestWeb
 					UserName = ConfigurationManager.AppSettings["slack:username"],
 					IconEmoji = ConfigurationManager.AppSettings["slack:iconEmoji"],
 					IgnoreHandled = true,
+					IgnoreExceptionTypes = new [] { typeof(System.ApplicationException) },
 				};
 			filters.Add(slackReport, 1);
 		}
