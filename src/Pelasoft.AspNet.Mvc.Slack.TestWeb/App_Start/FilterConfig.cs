@@ -12,7 +12,7 @@ namespace Pelasoft.AspNet.Mvc.Slack.TestWeb
 			filters.Add(new HandleErrorAttribute());
 
 			var slackReport =
-				new WebHookErrorReportFilter(ConfigurationManager.AppSettings["slack:webhookurl"])
+				new WebHookErrorReportAttribute(ConfigurationManager.AppSettings["slack:webhookurl"])
 				{
 					ChannelName = ConfigurationManager.AppSettings["slack:channel"],
 					UserName = ConfigurationManager.AppSettings["slack:username"],
