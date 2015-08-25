@@ -27,11 +27,15 @@ A couple of import notes:
 Add something like this to your global application configuration (global.asax.xx | App_Start\FilterConfig.xx | etc.)
 ```csharp
 var slackReporter =
-	new WebHookErrorReportFilter("{my slack team webhook url}")
+	new WebHookErrorReportFilter(
+		new WebHookOptions("{my slack team webhook url}")
+		{
+			ChannelName = '{#channel|@username}", // Optional; Channel/user to post TO
+			UserName = "{user name}" // Optional; user to post AS
+		}
+	)
 	{
-		ChannelName = "{#channel|@username}", // Optional; Channel/user to post TO
-		UserName = "{user name}", // Optional; user to post AS
-		IgnoreHandled = true // or false; whether or not to ignore already handled exceptions
+		IgnoreHandled = true
 	};
 filters.Add(slackReporter);
 ```
