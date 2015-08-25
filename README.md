@@ -35,20 +35,3 @@ var slackReporter =
 	};
 filters.Add(slackReporter);
 ```
-## WebHookErrorReportAttribute
-An MVC action filter that wraps the WebHookErrorReportFilter. It performs the same function but can be used to decorate a controller or controller method.
-
-### Minimalist Example:
-```csharp
-	[WebHookErrorReport("{my slack team webhook URL}")]
-```
-
-### Complete Example:
-```csharp
-	[WebHookErrorReport(
-		"{my slack team webhook URL}",
-		ChannelName = "{#channel|@username}",
-		UserName = "{user name}",
-		IgnoreHandled = true
-	)]
-```

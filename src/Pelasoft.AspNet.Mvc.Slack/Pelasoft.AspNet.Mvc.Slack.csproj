@@ -80,11 +80,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IWebHookErrorReporter.cs" />
-    <Compile Include="WebHookErrorReportAttribute.cs">
+    <Compile Include="WebHookOptions.cs" />
+    <Compile Include="WebHookErrorReportFilter.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WebHookExceptionReporter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config">
