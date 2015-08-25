@@ -82,7 +82,8 @@ namespace Pelasoft.AspNet.Mvc.Slack
 
 			message.IconEmoji = IconEmoji ?? WebHooks.Emoji.HeavyExclamationMark;
 
-			message.Text = string.Format("A web application exception has occurred: {0}", filterContext.Exception.Message);
+			var ex = filterContext.Exception;
+			message.Text = string.Format("A web application exception has occurred:\n   type: {0}\n   message: {1}\n   stack trace: {2}", ex.GetType(), ex.Message, ex.StackTrace);
 
 			client.Post(message);
 		}
