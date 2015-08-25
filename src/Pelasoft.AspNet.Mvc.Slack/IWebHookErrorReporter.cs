@@ -8,5 +8,6 @@ namespace Pelasoft.AspNet.Mvc.Slack
 		bool IgnoreHandled { get; set; }
 		string UserName { get; set; }
 		string WebhookUrl { get; set; }
+		string IconEmoji { get; set; }
 	}
 }

@@ -43,6 +43,12 @@ namespace Pelasoft.AspNet.Mvc.Slack
 		public Type[] ExcludeExceptionTypes { get; set; }
 
 		/// <summary>
+		/// The Emoji icon used for the posts.
+		/// Default is :heavy_exclamation_mark:
+		/// </summary>
+		public string IconEmoji { get; set; }
+
+		/// <summary>
 		/// Creates a new instance of the exception filter for the specified <paramref name="webHookUrl"/>.
 		/// </summary>
 		/// <param name="exceptionType">The exception type to handle.</param>
@@ -67,7 +73,7 @@ namespace Pelasoft.AspNet.Mvc.Slack
 				message.Username = UserName;
 			}
 
-			message.IconEmoji = WebHooks.Emoji.HeavyExclamationMark;
+			message.IconEmoji = IconEmoji ?? WebHooks.Emoji.HeavyExclamationMark;
 
 			message.Text = string.Format("A web application exception has occurred: {0}", filterContext.Exception.Message);
 

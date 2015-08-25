@@ -16,6 +16,7 @@ namespace Pelasoft.AspNet.Mvc.Slack.TestWeb
 				{
 					ChannelName = ConfigurationManager.AppSettings["slack:channel"],
 					UserName = ConfigurationManager.AppSettings["slack:username"],
+					IconEmoji = ConfigurationManager.AppSettings["slack:iconEmoji"],
 					IgnoreHandled = true,
 				};
 			filters.Add(slackReport, 1);

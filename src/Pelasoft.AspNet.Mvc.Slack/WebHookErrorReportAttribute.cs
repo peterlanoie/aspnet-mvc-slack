@@ -61,6 +61,16 @@ namespace Pelasoft.AspNet.Mvc.Slack
 		}
 
 		/// <summary>
+		/// The Emoji icon used for the posts.
+		/// Default is :heavy_exclamation_mark:
+		/// </summary>
+		public string IconEmoji
+		{
+			get { return _innerFilter.IconEmoji; }
+			set { _innerFilter.IconEmoji = value; }
+		}
+
+		/// <summary>
 		/// Creates a new instance of the exception filter for the specified <paramref name="webHookUrl"/>.
 		/// </summary>
 		/// <param name="exceptionType">The exception type to handle.</param>
