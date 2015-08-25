@@ -42,6 +42,7 @@ namespace Pelasoft.AspNet.Mvc.Slack
 			}
 			attachment.MrkdwnIn = new List<string> { "text" };
 			var textFormat = @"*URL*: %%url%%
+*Machine Name*: %%hostname%%
 *Type*: %%ex:type%%
 *Message*: %%ex:message%%
 *Target Site*: %%ex:site%%
@@ -50,6 +51,7 @@ namespace Pelasoft.AspNet.Mvc.Slack
 
 			attachment.Text = textFormat
 				.Replace("%%url%%", httpContext.Request.Url.ToString())
+				.Replace("%%hostname%%", Environment.MachineName)
 				.Replace("%%ex:type%%", ex.GetType().ToString())
 				.Replace("%%ex:message%%", ex.Message)
 				.Replace("%%ex:site%%", ex.TargetSite.ToString())
