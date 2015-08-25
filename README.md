@@ -30,7 +30,7 @@ var slackReporter =
 	new WebHookErrorReportFilter(
 		new WebHookOptions("{my slack team webhook url}")
 		{
-			ChannelName = '{#channel|@username}", // Optional; Channel/user to post TO
+			ChannelName = "{#channel|@username}", // Optional; Channel/user to post TO
 			UserName = "{user name}" // Optional; user to post AS
 		}
 	)
