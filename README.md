@@ -24,7 +24,7 @@ A couple of import notes:
 * By default, this filter doesn't care if the exception has already been handled. If you want to ignore previously handled exceptions, set ```IgnoreHandled = true```.
 
 ### Example: Global app reporting
-Add something like this to your global application configuration (global.asax.xx | App_Start\FilterConfig.xx | etc.)
+Add something like this to your global application configuration (e.g. global.asax.cs | App_Start\FilterConfig.cs | etc.)
 ```csharp
 var slackReporter =
 	new WebHookErrorReportFilter(
