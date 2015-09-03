@@ -88,9 +88,11 @@
     <Compile Include="WebHookExceptionReporter.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="nuget-pack.bat" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Pelasoft.AspNet.Mvc.Slack.nuspec" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
