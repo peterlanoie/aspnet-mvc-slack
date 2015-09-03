@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package >
+	<metadata>
+		<id>aspnet-mvc-slack</id>
+		<version>$version$</version>
+		<title>ASP.NET MVC Utilities for Slack integration</title>
+		<authors>Peter Lanoie and contributors</authors>
+		<owners>Peter Lanoie</owners>
+		<licenseUrl>https://github.com/peterlanoie/aspnet-mvc-slack/blob/master/LICENSE</licenseUrl>
+		<projectUrl>https://github.com/peterlanoie/aspnet-mvc-slack</projectUrl>
+		<requireLicenseAcceptance>false</requireLicenseAcceptance>
+		<description>ASP.NET MVC Utilities for Slack integration</description>
+		<releaseNotes>Initial Release.</releaseNotes>
+		<copyright>Copyright 2015</copyright>
+		<tags>Slack ASPNET MVC</tags>
+	</metadata>
+</package>

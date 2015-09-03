@@ -1,0 +1,1 @@
+nuget pack Pelasoft.AspNet.Mvc.Slack.csproj -Verbosity detailed -Build -IncludeReferencedProjects -Properties Configuration=Release
