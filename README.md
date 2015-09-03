@@ -7,15 +7,11 @@ You have a slack team already set up and want to integrate parts of your ASP.NET
 1. You must first enable the Webhooks integration for your Slack account to get the token. You can enable it here: https://slack.com/services/new/incoming-webhook
 2. This depends on Slack.Webhooks
 
-<!-- NOT YET, DON'T KNOW HOW TO CREATE A NUGET PACKAGE YET
-Download:
-
-Package is hosted on [Nuget](https://www.nuget.org/packages/aspnet-mvc-slack/) and can be installed from the package manager:
-
+This library is available as a [Nuget package](https://www.nuget.org/packages/aspnet-mvc-slack/). Install it from the package manager console with this command:
 ```
 PM> Install-Package aspnet-mvc-slack
 ```
--->
+
 ## WebHookErrorReportFilter
 An MVC IExceptionFilter implementation that will post a captured exception to a slack channel.  In order to be effective, exceptions must be allowed to bubble up to the top of your application's ASP.NET MVC process stack so that they are handled by the MVC request pipeline. This is typical for applications that use a common exception handling strategy such as the MVC ```HandleErrorAttribute``` or ASP.NET custom errors behavior.
 
