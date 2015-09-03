@@ -1,7 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <appSettings>
-	<!-- Use this file to set the slack app settings for local dev only.
-		File changes will be ignored by Git. -->
+	<!-- 
+	1. Copy this file to `web.config.appSettings.local` (Git will ignore it.)
+	2. Set the values below to those appropriate for your Slack team.
+
+	The TestWeb web.config will use these values.
+	-->
 	<add key="slack:webhookurl" value="{my slack webhooks URL}"/>
 	<add key="slack:channel" value="{#channel or @username}"/>
 	<add key="slack:username" value="{posting user name}"/>
