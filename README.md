@@ -7,6 +7,8 @@ You have a slack team already set up and want to integrate parts of your ASP.NET
 1. You must first enable the Webhooks integration for your Slack account to get the token. You can enable it here: https://slack.com/services/new/incoming-webhook
 2. This depends on Slack.Webhooks
 
+### Download:
+
 This library is available as a [Nuget package](https://www.nuget.org/packages/aspnet-mvc-slack/). Install it from the package manager console with this command:
 ```
 PM> Install-Package aspnet-mvc-slack
