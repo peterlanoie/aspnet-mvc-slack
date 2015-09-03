@@ -1,5 +1,7 @@
 ASP.Net MVC utilities and helpers for Slack
 ==============
+[![NuGet Version](http://img.shields.io/nuget/v/aspnet-mvc-slack.svg?style=plastic)](https://www.nuget.org/packages/aspnet-mvc-slack/) [![NuGet Downloads](http://img.shields.io/nuget/dt/aspnet-mvc-slack.svg?style=plastic)](https://www.nuget.org/packages/aspnet-mvc-slack/)
+
 You have a slack team already set up and want to integrate parts of your ASP.NET MVC application into it so that certain triggers result in Slack posts. These integrations will help you with that.
 
 ### Requirements:
