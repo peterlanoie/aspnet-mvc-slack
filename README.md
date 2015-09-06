@@ -18,8 +18,7 @@ The library references `System.Web.Mvc` version 2 so you can use it with MVC 2 a
 The given filter instance must implement one or more of the following filter interfaces:
     IAuthorizationFilter, IActionFilter, IResultFilter, IExceptionFilter.
 ```
-This is a bit of a red herring. The runtime is encountering a mismatch for the referenced type `IExceptionFilter` between the referenced one (MVCv2) your project's (> MVCv2).
-You need to explicitly direct the runtime to re-bind older MVC references to the one appropriate to your project in order for the referenced types to not conflict.  Ensure that you have a `dependentAssembly` node like this in your web.config (map to the version applicable to your project):
+This is a bit of a red herring. The runtime is encountering a mismatch for the referenced type `IExceptionFilter` between the one referenced by this library (MVCv2) and the one referenced by your project (> MVCv2).  You need to explicitly direct the runtime to re-bind older MVC references to the one appropriate to your project in order for the referenced types to not conflict.  Ensure that you have a `dependentAssembly` node like this in your web.config (map to the version applicable to your project):
 
 ```xml
 	<runtime>
