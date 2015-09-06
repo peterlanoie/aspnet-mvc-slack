@@ -80,12 +80,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="WebHookOptions.cs" />
+    <Compile Include="..\shared\WebHookExceptionReporter.cs">
+      <Link>WebHookExceptionReporter.cs</Link>
+    </Compile>
+    <Compile Include="..\shared\WebHookOptions.cs">
+      <Link>WebHookOptions.cs</Link>
+    </Compile>
     <Compile Include="WebHookErrorReportFilter.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WebHookExceptionReporter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="nuget-pack.bat" />
