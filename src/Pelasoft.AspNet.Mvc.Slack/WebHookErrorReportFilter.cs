@@ -47,7 +47,7 @@ namespace Pelasoft.AspNet.Mvc.Slack
 				&& IgnoreExceptionTypes.Contains(filterContext.Exception.GetType()))
 				return;
 
-			WebHookExceptionReporter.ReportException(filterContext.Exception, filterContext.HttpContext, Options);
+			WebHookExceptionReporter.ReportException(filterContext.Exception, Options);
 		}
 
 	}

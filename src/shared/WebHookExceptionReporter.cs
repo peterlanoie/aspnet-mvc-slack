@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Web;
 using WebHooks = Slack.Webhooks;
@@ -9,7 +8,7 @@ namespace Pelasoft.AspNet.Mvc.Slack
 {
 	public static class WebHookExceptionReporter
 	{
-		public static void ReportException(Exception ex, HttpContextBase httpContext, WebHookOptions options)
+		public static void ReportException(Exception ex, WebHookOptions options)
 		{
 			var client = new WebHooks.SlackClient(options.WebhookUrl);
 			var message = new WebHooks.SlackMessage();
@@ -50,7 +49,7 @@ namespace Pelasoft.AspNet.Mvc.Slack
 %%ex:stackTrace%%";
 
 			attachment.Text = textFormat
-				.Replace("%%url%%", httpContext.Request.Url.ToString())
+				.Replace("%%url%%", HttpContext.Current.Request.Url.ToString())
 				.Replace("%%hostname%%", Environment.MachineName)
 				.Replace("%%ex:type%%", ex.GetType().ToString())
 				.Replace("%%ex:message%%", ex.Message)
