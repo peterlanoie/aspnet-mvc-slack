@@ -9,6 +9,29 @@ You have a slack team already set up and want to integrate parts of your ASP.NET
 1. You must first enable the Webhooks integration for your Slack account to get the token. You can enable it here: https://slack.com/services/new/incoming-webhook
 2. This depends on Slack.Webhooks
 
+### Compatibilty
+The library is built against Framework Version 4.0 since the referenced libraries are built against that. 
+
+#### MVC 3 or higher
+The library references `System.Web.Mvc` version 2 so you can use it with MVC 2 and up. However, for version above 3, you may see this error:
+```
+The given filter instance must implement one or more of the following filter interfaces:
+    IAuthorizationFilter, IActionFilter, IResultFilter, IExceptionFilter.
+```
+This is a bit of a red herring. The runtime is encountering a mismatch for the referenced type `IExceptionFilter` between the referenced one (MVCv2) your project's (> MVCv2).
+You need to explicitly direct the runtime to re-bind older MVC references to the one appropriate to your project in order for the referenced types to not conflict.  Ensure that you have a `dependentAssembly` node like this in your web.config (map to the version applicable to your project):
+
+```xml
+	<runtime>
+		<assemblyBinding xmlns="urn:schemas-microsoft-com:asm.v1">
+			<dependentAssembly>
+				<assemblyIdentity name="System.Web.Mvc" publicKeyToken="31bf3856ad364e35" />
+				<bindingRedirect oldVersion="0.0.0.0-4.0.0.0" newVersion="4.0.0.0" />
+			</dependentAssembly>
+		</assemblyBinding>
+	</runtime>
+```
+
 ### Download:
 
 This library is available as a [Nuget package](https://www.nuget.org/packages/aspnet-mvc-slack/). Install it from the package manager console with this command:
