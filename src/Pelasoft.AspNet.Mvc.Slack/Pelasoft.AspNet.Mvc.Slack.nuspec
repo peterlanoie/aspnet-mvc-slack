@@ -11,7 +11,7 @@
 		<requireLicenseAcceptance>false</requireLicenseAcceptance>
 		<description>ASP.NET MVC Utilities for Slack integration</description>
 		<summary>Provides utilities for posting MVC event/action messages to a Slack team channel.</summary>
-		<releaseNotes>Initial Release.</releaseNotes>
+		<releaseNotes>Downgraded referenced MVC version to make library usable with more MVC versions.</releaseNotes>
 		<copyright>Copyright 2015</copyright>
 		<tags>Slack ASP.NET MVC</tags>
 	</metadata>
