@@ -23,8 +23,7 @@ namespace Pelasoft.AspNet.Mvc.Slack
 
 			message.IconEmoji = options.IconEmoji ?? WebHooks.Emoji.HeavyExclamationMark;
 
-			//			message.Text = string.Format("A web application exception has occurred:\n   type: {0}\n   message: {1}\n   stack trace: {2}", ex.GetType(), ex.Message, ex.StackTrace);
-			message.Text = options.Text ?? "An exception has occurred in an MVC application.";
+			message.Text = options.Text ?? "An exception has occurred in an application.";
 
 			var attachment = new WebHooks.SlackAttachment();
 			// simple message for unformatted and notification views
