@@ -23,17 +23,28 @@ namespace Pelasoft.AspNet.Mvc.Slack
 
 		/// <summary>
 		/// The types of the exceptions to ignore. Use this to cut down on unecessary channel chatter.
-		/// This list will be ignored if <see cref="ExceptionType"/> is specified.
 		/// </summary>
 		public Type[] IgnoreExceptionTypes { get; set; }
 
 		/// <summary>
-		/// Creates a new instance of the exception filter for the specified <paramref name="webHookUrl"/>.
+		/// Creates a new instance of the exception filter with the the specified web hook <paramref name="options"/>.
 		/// </summary>
 		public WebHookErrorReportFilter(WebHookOptions options)
 		{
 			Options = options;
 		}
+
+		/// <summary>
+		/// Creates a new instance with no parameters. 
+		/// Use this if you need to provide the web hook options via the GetWebHookOptions event.
+		/// </summary>
+		public WebHookErrorReportFilter()
+		{
+		}
+
+		public event Action<ExceptionReportingEventArgs> OnExceptionReporting;
+
+		public event Action<Exception, WebHookOptions> OnExceptionReported;
 
 		public void OnException(ExceptionContext filterContext)
 		{
@@ -41,13 +52,48 @@ namespace Pelasoft.AspNet.Mvc.Slack
 			// ...ignoring handled exceptions
 			if(IgnoreHandled && filterContext.ExceptionHandled) return;
 
+			var exception = filterContext.Exception;
+
 			// ...the exception type is in the ignore list
 			if(IgnoreExceptionTypes != null
 				&& IgnoreExceptionTypes.Length > 0
-				&& IgnoreExceptionTypes.Contains(filterContext.Exception.GetType()))
+				&& IgnoreExceptionTypes.Contains(exception.GetType()))
 				return;
 
-			WebHookExceptionReporter.ReportException(filterContext.Exception, Options);
+			var options = Options;
+
+			// is the event set?
+			if (OnExceptionReporting != null)
+			{
+				var eventArgs = new ExceptionReportingEventArgs(exception);
+				OnExceptionReporting(eventArgs);
+				// did event handler tell us to cancel the error report?
+				if(eventArgs.CancelReport)
+				{
+					// eject!
+					return;
+				}
+
+				// if options were provided by event handler...
+				if(eventArgs.Options != null)
+				{
+					//...override the original ones.
+					options = eventArgs.Options;
+				}
+			}
+
+			if(options == null)
+			{
+				throw new NullReferenceException(
+					"The WebHookErrorReportFilter.Options must be set as it contains the details for connecting to the Slack web hook. Use any one of: new WebHookErrorReportFilter(WebHookOptions options); WebHookErrorReportFilter.Options setter; OnExceptionReporting event ExceptionReportingEventArgs.Options property.");
+			}
+
+			WebHookExceptionReporter.ReportException(exception, options);
+
+			if(OnExceptionReported != null)
+			{
+				OnExceptionReported(exception, options);
+			}
 		}
 
 	}
