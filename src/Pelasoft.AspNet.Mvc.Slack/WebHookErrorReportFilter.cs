@@ -12,7 +12,9 @@ namespace Pelasoft.AspNet.Mvc.Slack
 	/// </summary>
 	public class WebHookErrorReportFilter : IExceptionFilter
 	{
-
+		/// <summary>
+		/// The options defined for the slack web hook.
+		/// </summary>
 		public WebHookOptions Options { get; set; }
 
 		/// <summary>
@@ -27,9 +29,16 @@ namespace Pelasoft.AspNet.Mvc.Slack
 		public Type[] IgnoreExceptionTypes { get; set; }
 
 		/// <summary>
+		/// Whether or not to throw an exception if the report fails. Default is true.
+		/// Set this to false and use the OnExceptionReported event to more gracefully handle slack reporting failures.
+		/// </summary>
+		public bool ThrowOnFailure { get; set; }
+
+		/// <summary>
 		/// Creates a new instance of the exception filter with the the specified web hook <paramref name="options"/>.
 		/// </summary>
 		public WebHookErrorReportFilter(WebHookOptions options)
+			: this()
 		{
 			Options = options;
 		}
@@ -40,11 +49,21 @@ namespace Pelasoft.AspNet.Mvc.Slack
 		/// </summary>
 		public WebHookErrorReportFilter()
 		{
+			ThrowOnFailure = true;
 		}
 
+		/// <summary>
+		/// Event raised prior to reporting event. This gives the caller the opportunity to set the options
+		/// as well as to cancel the report that's about to be made.
+		/// </summary>
 		public event Action<ExceptionReportingEventArgs> OnExceptionReporting;
 
-		public event Action<Exception, WebHookOptions> OnExceptionReported;
+		/// <summary>
+		/// Event raised after the exception is reported. This allows the caller to handle any follow up to the report
+		/// is useful for any follow up of a report
+		/// as well as to assist the caller in seeing the actual options used for the report.
+		/// </summary>
+		public event Action<ExceptionReportedEventArgs> OnExceptionReported;
 
 		public void OnException(ExceptionContext filterContext)
 		{
@@ -63,7 +82,7 @@ namespace Pelasoft.AspNet.Mvc.Slack
 			var options = Options;
 
 			// is the event set?
-			if (OnExceptionReporting != null)
+			if(OnExceptionReporting != null)
 			{
 				var eventArgs = new ExceptionReportingEventArgs(exception);
 				OnExceptionReporting(eventArgs);
@@ -88,11 +107,27 @@ namespace Pelasoft.AspNet.Mvc.Slack
 					"The WebHookErrorReportFilter.Options must be set as it contains the details for connecting to the Slack web hook. Use any one of: new WebHookErrorReportFilter(WebHookOptions options); WebHookErrorReportFilter.Options setter; OnExceptionReporting event ExceptionReportingEventArgs.Options property.");
 			}
 
-			WebHookExceptionReporter.ReportException(exception, options);
-
+			var reportedArgs = new ExceptionReportedEventArgs()
+			{
+				Options = options,
+				Exception = exception
+			};
+			try
+			{
+				WebHookExceptionReporter.ReportException(exception, options);
+				reportedArgs.ReportSucceeded = true;
+			}
+			catch(Exception ex)
+			{
+				reportedArgs.ReportException = ex;
+			}
 			if(OnExceptionReported != null)
 			{
-				OnExceptionReported(exception, options);
+				OnExceptionReported(reportedArgs);
+			}
+			if(!reportedArgs.ReportSucceeded && ThrowOnFailure)
+			{
+				throw reportedArgs.ReportException;
 			}
 		}
 
