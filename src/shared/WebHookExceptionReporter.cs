@@ -10,6 +10,17 @@ namespace Pelasoft.AspNet.Mvc.Slack
 	{
 		public static void ReportException(Exception ex, WebHookOptions options)
 		{
+			if (options == null)
+			{
+				throw new NullReferenceException(
+					"An instance of WebHookOptions must be provided as it contains the details for connecting to the Slack web hook.");
+			}
+			if (options.WebhookUrl == null)
+			{
+				throw new ArgumentException(
+					"WebHookOptions.WebhookUrl must contain a value. Please provide the URL to your Slack team webhook.");
+			}
+
 			var client = new WebHooks.SlackClient(options.WebhookUrl);
 			var message = new WebHooks.SlackMessage();
 			if(!string.IsNullOrEmpty(options.ChannelName))
