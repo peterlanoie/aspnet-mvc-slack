@@ -29,6 +29,20 @@ namespace Pelasoft.AspNet.Mvc.Slack.TestWeb
 				IgnoreExceptionTypes = new[] { typeof(System.ApplicationException) },
 			};
 			filters.Add(slackReport, 1);
+			
+			var slackReportEvented = new WebHookErrorReportFilter();
+			slackReportEvented.OnExceptionReporting += slackReportEvented_OnExceptionReporting;
+			filters.Add(slackReportEvented);
+		}
+
+		static void slackReportEvented_OnExceptionReporting(ExceptionReportingEventArgs args)
+		{
+			args.Options = new WebHookOptions(ConfigurationManager.AppSettings["slack:webhookurl"])
+			{
+				Text = "Options reported via the event.",
+				ChannelName = ConfigurationManager.AppSettings["slack:channel"],
+			};
+//			args.CancelReport = true;
 		}
 	}
 }
