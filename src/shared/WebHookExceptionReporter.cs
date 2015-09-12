@@ -8,6 +8,9 @@ namespace Pelasoft.AspNet.Mvc.Slack
 {
 	public class WebHookExceptionReporter
 	{
+		public const string DEFAULT_TEXT = "An exception has occurred in an application.";
+		public const string DEFAULT_COLOR = "danger";
+
 		private readonly ISlackClient _client;
 
 		public WebHookExceptionReporter(string webHookUrl)
@@ -27,7 +30,7 @@ namespace Pelasoft.AspNet.Mvc.Slack
 				throw new NullReferenceException(
 					"An instance of WebHookOptions must be provided as it contains the details for connecting to the Slack web hook.");
 			}
-			if(options.WebhookUrl == null)
+			if(string.IsNullOrEmpty(options.WebhookUrl))
 			{
 				throw new ArgumentException(
 					"WebHookOptions.WebhookUrl must contain a value. Please provide the URL to your Slack team webhook.");
@@ -45,12 +48,12 @@ namespace Pelasoft.AspNet.Mvc.Slack
 
 			message.IconEmoji = options.IconEmoji ?? WebHooks.Emoji.HeavyExclamationMark;
 
-			message.Text = options.Text ?? "An exception has occurred in an application.";
+			message.Text = options.Text ?? DEFAULT_TEXT;
 
 			var attachment = new WebHooks.SlackAttachment();
 			// simple message for unformatted and notification views
 			attachment.Fallback = string.Format("Web app exception: {0}", ex.Message);
-			attachment.Color = options.AttachmentColor ?? "danger";
+			attachment.Color = options.AttachmentColor ?? DEFAULT_COLOR;
 
 			if(!string.IsNullOrEmpty(options.AttachmentTitle))
 			{
@@ -69,12 +72,14 @@ namespace Pelasoft.AspNet.Mvc.Slack
 *Stack Trace*:
 %%ex:stackTrace%%";
 
+			var requestUrl = HttpContext.Current != null ? HttpContext.Current.Request.Url.ToString() : "[no HttpContext available]";
+
 			attachment.Text = textFormat
-				.Replace("%%url%%", HttpContext.Current.Request.Url.ToString())
+				.Replace("%%url%%", requestUrl)
 				.Replace("%%hostname%%", Environment.MachineName)
 				.Replace("%%ex:type%%", ex.GetType().ToString())
 				.Replace("%%ex:message%%", ex.Message)
-				.Replace("%%ex:site%%", ex.TargetSite.ToString())
+				.Replace("%%ex:site%%", ex.TargetSite != null ? ex.TargetSite.ToString() : "")
 				.Replace("%%ex:stackTrace%%", ex.StackTrace);
 
 			message.Attachments = new List<WebHooks.SlackAttachment>();
