@@ -12,6 +12,8 @@ namespace Pelasoft.AspNet.Mvc.Slack
 	/// </summary>
 	public class WebHookErrorReportFilter : IExceptionFilter
 	{
+		private ISlackClient _client;
+
 		/// <summary>
 		/// The options defined for the slack web hook.
 		/// </summary>
@@ -35,20 +37,15 @@ namespace Pelasoft.AspNet.Mvc.Slack
 		public bool ThrowOnFailure { get; set; }
 
 		/// <summary>
-		/// Creates a new instance of the exception filter with the the specified web hook <paramref name="options"/>.
+		/// Creates a new instance of the exception filter with optional arguments.
 		/// </summary>
-		public WebHookErrorReportFilter(WebHookOptions options)
-			: this()
+		/// <param name="options">The options for configuring the webhook.</param>
+		/// <param name="client">The webhook client to use for posting the error report messages. 
+		/// If no options are provided here, they will need to be provided by an OnExceptionReporting handler.</param>
+		public WebHookErrorReportFilter(WebHookOptions options = null, ISlackClient client = null)
 		{
 			Options = options;
-		}
-
-		/// <summary>
-		/// Creates a new instance with no parameters. 
-		/// Use this if you need to provide the web hook options via the GetWebHookOptions event.
-		/// </summary>
-		public WebHookErrorReportFilter()
-		{
+			_client = client;
 			ThrowOnFailure = true;
 		}
 
@@ -114,8 +111,8 @@ namespace Pelasoft.AspNet.Mvc.Slack
 			};
 			try
 			{
-				WebHookExceptionReporter.ReportException(exception, options);
-				reportedArgs.ReportSucceeded = true;
+				var reporter = _client == null ? new WebHookExceptionReporter(options.WebhookUrl) : new WebHookExceptionReporter(_client);
+				reportedArgs.ReportSucceeded = reporter.ReportException(exception, options);
 			}
 			catch(Exception ex)
 			{
