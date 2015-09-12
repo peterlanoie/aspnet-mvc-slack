@@ -197,3 +197,5 @@ FakesAssemblies/
 
 # Local web app overrides
 web.config.appSettings.local
+*.testsettings
+*.vsmdi
