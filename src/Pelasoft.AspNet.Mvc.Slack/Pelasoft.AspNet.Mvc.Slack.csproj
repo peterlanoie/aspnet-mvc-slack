@@ -50,6 +50,12 @@
     <Reference Include="System.Web.Mvc, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\shared\ISlackClient.cs">
+      <Link>ISlackClient.cs</Link>
+    </Compile>
+    <Compile Include="..\shared\SlackClientAdapter.cs">
+      <Link>SlackClientAdapter.cs</Link>
+    </Compile>
     <Compile Include="..\shared\WebHookExceptionReporter.cs">
       <Link>WebHookExceptionReporter.cs</Link>
     </Compile>
@@ -58,8 +64,6 @@
     </Compile>
     <Compile Include="ExceptionReportedEventArgs.cs" />
     <Compile Include="ExceptionReportingEventArgs.cs" />
-    <Compile Include="ISlackClient.cs" />
-    <Compile Include="SlackClientAdapter.cs" />
     <Compile Include="WebHookErrorReportFilter.cs">
       <SubType>Code</SubType>
     </Compile>
