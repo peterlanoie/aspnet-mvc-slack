@@ -81,21 +81,17 @@ namespace Pelasoft.AspNet.Mvc.Slack
 			// is the event set?
 			if(OnExceptionReporting != null)
 			{
-				var eventArgs = new ExceptionReportingEventArgs(exception);
-				OnExceptionReporting(eventArgs);
+				var reportingArgs = new ExceptionReportingEventArgs(exception) {Options = options};
+				OnExceptionReporting(reportingArgs);
 				// did event handler tell us to cancel the error report?
-				if(eventArgs.CancelReport)
+				if(reportingArgs.CancelReport)
 				{
 					// eject!
 					return;
 				}
 
-				// if options were provided by event handler...
-				if(eventArgs.Options != null)
-				{
-					//...override the original ones.
-					options = eventArgs.Options;
-				}
+				// grab the options back from the args in case it was created new.
+				options = reportingArgs.Options;
 			}
 
 			if(options == null)
