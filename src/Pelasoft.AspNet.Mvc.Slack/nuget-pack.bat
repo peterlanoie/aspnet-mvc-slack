@@ -5,6 +5,8 @@ echo ##                                    ##
 echo ##  * Update assembly version number  ##
 echo ##  * Update nuspec revision notes    ##
 echo ##  * Create tag after final commit   ##
+echo ##    * git tag vX.X.X                ##
+echo ##    * git push origin --tags        ##
 echo ##                                    ##
 echo ########################################
 echo.
