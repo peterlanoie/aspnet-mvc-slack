@@ -11,7 +11,7 @@
 		<requireLicenseAcceptance>false</requireLicenseAcceptance>
 		<description>ASP.NET MVC Utilities for Slack integration</description>
 		<summary>Provides utilities for posting MVC event/action messages to a Slack team channel.</summary>
-		<releaseNotes>Added pre and post reporting events for supporting alternate option provisioning and post report behavior.</releaseNotes>
+		<releaseNotes>Bug fixes and hardening (to satisfy unit testing).</releaseNotes>
 		<copyright>Copyright 2015</copyright>
 		<tags>Slack ASP.NET MVC</tags>
 	</metadata>
