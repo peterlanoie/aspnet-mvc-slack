@@ -16,12 +16,13 @@ namespace Pelasoft.AspNet.Mvc.Slack.TestWeb
 					new WebHookOptions(ConfigurationManager.AppSettings["slack:webhookurl"])
 					{
 						ChannelName = ConfigurationManager.AppSettings["slack:channel"],
-						UserName = ConfigurationManager.AppSettings["slack:username"],
-						IconEmoji = ConfigurationManager.AppSettings["slack:iconEmoji"],
-						AttachmentColor = ConfigurationManager.AppSettings["slack:color"],
-						AttachmentTitle = ConfigurationManager.AppSettings["slack:title"],
-						AttachmentTitleLink = ConfigurationManager.AppSettings["slack:link"],
-						Text = ConfigurationManager.AppSettings["slack:text"],
+						//UserName = ConfigurationManager.AppSettings["slack:username"],
+						//IconEmoji = ConfigurationManager.AppSettings["slack:iconEmoji"],
+						//AttachmentColor = ConfigurationManager.AppSettings["slack:color"],
+						//AttachmentTitle = ConfigurationManager.AppSettings["slack:title"],
+						//AttachmentTitleLink = ConfigurationManager.AppSettings["slack:link"],
+						//Text = ConfigurationManager.AppSettings["slack:text"],
+						//ExceptionTextFormat = ConfigurationManager.AppSettings["slack:exceptionTextFormat"],
 					}
 			)
 			{
@@ -30,9 +31,9 @@ namespace Pelasoft.AspNet.Mvc.Slack.TestWeb
 			};
 			filters.Add(slackReport, 1);
 			
-			var slackReportEvented = new WebHookErrorReportFilter();
-			slackReportEvented.OnExceptionReporting += slackReportEvented_OnExceptionReporting;
-			filters.Add(slackReportEvented);
+			//var slackReportEvented = new WebHookErrorReportFilter();
+			//slackReportEvented.OnExceptionReporting += slackReportEvented_OnExceptionReporting;
+			//filters.Add(slackReportEvented);
 		}
 
 		static void slackReportEvented_OnExceptionReporting(ExceptionReportingEventArgs args)
