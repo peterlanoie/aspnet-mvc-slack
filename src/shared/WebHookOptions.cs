@@ -42,6 +42,12 @@ namespace Pelasoft.AspNet.Mvc.Slack
 		public string Text { get; set; }
 
 		/// <summary>
+		/// The string format for the formatting the exception details in the post.
+		/// Use documented replacement tokens for filling in the exception detail elements.
+		/// </summary>
+		public string ExceptionTextFormat { get; set; }
+
+		/// <summary>
 		/// The color of the attachment bar. Useful to differentiate between 
 		/// different sources when posted to the same channel.
 		/// </summary>
@@ -51,5 +57,6 @@ namespace Pelasoft.AspNet.Mvc.Slack
 		{
 			WebhookUrl = webHookUrl;
 		}
+
 	}
 }

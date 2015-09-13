@@ -63,6 +63,38 @@ namespace Pelasoft.AspNet.Mvc.Slack.Tests
 		}
 
 		[TestMethod]
+		public void AttachmentTextIsCustomFormat()
+		{
+			const string format = "This is the custom format for the attachment.";
+			var client = new MockSlackClient(x => Assert.AreEqual(format, x.Attachments[0].Text));
+			var reporter = new WebHookExceptionReporter(client);
+			var options = TestHelpers.GetMinimalOptions();
+			options.ExceptionTextFormat = format;
+			reporter.ReportException(new Exception(), options);
+		}
+
+		[TestMethod]
+		public void NullCustomExceptionFormatIsDefault()
+		{
+			var client = new MockSlackClient(x => Assert.IsFalse(string.IsNullOrWhiteSpace(x.Attachments[0].Text)));
+			var reporter = new WebHookExceptionReporter(client);
+			var options = TestHelpers.GetMinimalOptions();
+			options.ExceptionTextFormat = null;
+			reporter.ReportException(new Exception(), options);
+		}
+
+		[TestMethod]
+		public void WhiteSpaceCustomExceptionFormatIsDefault()
+		{
+			var client = new MockSlackClient(x => Assert.IsFalse(string.IsNullOrWhiteSpace(x.Attachments[0].Text)));
+			var reporter = new WebHookExceptionReporter(client);
+			var options = TestHelpers.GetMinimalOptions();
+			options.ExceptionTextFormat = "   ";
+			reporter.ReportException(new Exception(), options);
+		}
+
+
+		[TestMethod]
 		public void OptionValuesAreInMessage()
 		{
 			const string channelName = "#testChannel";

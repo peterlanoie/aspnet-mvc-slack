@@ -10,6 +10,13 @@ namespace Pelasoft.AspNet.Mvc.Slack
 	{
 		public const string DEFAULT_TEXT = "An exception has occurred in an application.";
 		public const string DEFAULT_COLOR = "danger";
+		public const string DEFAULT_FORMAT = @"*URL*: %%url%%
+*Machine Name*: %%hostname%%
+*Type*: %%ex:type%%
+*Message*: %%ex:message%%
+*Target Site*: %%ex:site%%
+*Stack Trace*:
+%%ex:stackTrace%%";
 
 		private readonly ISlackClient _client;
 
@@ -64,13 +71,7 @@ namespace Pelasoft.AspNet.Mvc.Slack
 				attachment.TitleLink = options.AttachmentTitleLink;
 			}
 			attachment.MrkdwnIn = new List<string> { "text" };
-			var textFormat = @"*URL*: %%url%%
-*Machine Name*: %%hostname%%
-*Type*: %%ex:type%%
-*Message*: %%ex:message%%
-*Target Site*: %%ex:site%%
-*Stack Trace*:
-%%ex:stackTrace%%";
+			var textFormat = !string.IsNullOrWhiteSpace(options.ExceptionTextFormat) ? options.ExceptionTextFormat : DEFAULT_FORMAT;
 
 			var requestUrl = HttpContext.Current != null ? HttpContext.Current.Request.Url.ToString() : "[no HttpContext available]";
 
